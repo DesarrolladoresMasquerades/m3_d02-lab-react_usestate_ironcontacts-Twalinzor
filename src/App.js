@@ -13,6 +13,7 @@ function App() {
   function getRandom(){
     let randomContact = contacts[Math.floor(Math.random()*contacts.length)];
 
+    if(fiveContacts.length === contacts.length) return alert('YOU CANT ADD MORE STUFF');
     if(fiveContacts.some((elem)=> elem.id === randomContact.id)) {
       getRandom()
     } else {
@@ -34,6 +35,10 @@ function App() {
     setContacts(sortedByName)
   }
 
+  function remove(id){
+    setContacts(fiveContacts.filter((contact)=> contact.id!==id))
+  }
+
   return (
   <div className="App">
     <div>
@@ -48,6 +53,7 @@ function App() {
           <th>Popularity</th>
           <th>Won an Oscar</th>
           <th>Won an Emmy</th>
+          <th>Action</th>
         </tr>
         {fiveContacts.map((contact)=>{
             return (
@@ -57,6 +63,7 @@ function App() {
             <td>{contact.popularity}</td>
             <td>{contact.wonOscar ? <p>🏆</p> : <p></p>}</td>
             <td>{contact.wonEmmy ? <p>🏆</p> : <p></p>}</td>
+            <td><button onClick={()=>remove(contact.id)}>KILL HIM</button></td>
           </tr>
           )
         })
